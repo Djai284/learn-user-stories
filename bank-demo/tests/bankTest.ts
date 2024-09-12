@@ -7,14 +7,21 @@ try {
   console.log(acc);
 }
 catch (err) {
-  console.log(err.message);
+  if (err instanceof Error) {
+    console.log(err.message);
+  } else {
+    console.log('An unknown error occurred');
+  }
 }
 
 // Scenario 2:
 try {
-  const acc2 = bank.createAccount('Jane Doe', 25, '1234567890');
+  const acc2 = bank.createAccount('John Doe', 30, '1234567890');
 }
 catch (err) {
-  console.log(err.message);
+  if (err instanceof Error) {
+    console.log(err.message);
+  } else {
+    console.log('An unknown error occurred');
+  }
 }
-
