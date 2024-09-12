@@ -6,6 +6,10 @@ interface IBankAccount {
   age: number;
   accountNumber: string;
   balance: number;
+
+  deposit(amount: number): void;
+  withdraw(amount: number): void;
+  getBalance(): number;
 }
 
 /**
@@ -22,6 +26,52 @@ class BankAccount implements IBankAccount {
     this.age = age;
     this.accountNumber = accountNumber;
     this.balance = 0;
+  }
+
+  /**
+   * Method to deposit money into the account
+   * @param amount The amount to deposit. Should be a valid dollar amount.
+   */
+  deposit(amount: number): void {
+    if (amount <= 0) {
+      throw new Error('Deposit amount must be greater than 0');
+    }
+
+    // check if the amount is a valid dollar amount with cents but no fractions
+    if (!Number.isInteger(amount*100)) {
+      throw new Error('Deposit amount should be a valid dollar amount (up to two decimal places)');
+    }
+
+    this.balance += amount;
+  }
+
+  /**
+   * Method to withdraw money from the account
+   * @param amount The amount to withdraw
+   */
+  withdraw(amount: number): void {
+    if (amount <= 0) {
+      throw new Error('Withdrawal amount must be greater than 0');
+    }
+
+    // check if the amount is a valid dollar amount with cents but no fractions
+    if (!Number.isInteger(amount*100)) {
+      throw new Error('Withdrawal amount should be a valid dollar amount (up to two decimal places)');
+    }
+
+    if (amount > this.balance) {
+      throw new Error('Insufficient funds');
+    }
+
+    this.balance -= amount;
+  }
+
+  /**
+   * Method to get the account balance
+   * @returns The account balance
+   */
+  getBalance(): number {
+    return this.balance;
   }
 }
 
